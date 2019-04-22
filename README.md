@@ -13,3 +13,41 @@ A postcss plugin that will optimize your media queries.
 ## Limitations
 
 * Only supports `em` and `px` units in media queries (for now).
+
+## Usage
+
+### Gulp
+
+_TODO_
+
+### Grunt
+
+```
+module.exports = function(grunt) {
+	grunt.loadNpmTasks("grunt-postcss");
+
+	grunt.initConfig({
+		postcss: {
+			options: {
+				processors: [
+					require("../../Code/postcss-media-query-optimizer")()
+				]
+			},
+			dist: {
+				src: "**/*.css"
+			}
+		}
+		// …
+	});
+};
+```
+
+## Run tests
+
+```
+npx ava
+```
+
+## Credits
+
+* This plugin borrows heavily from [`postcss-media-minmax`](https://github.com/postcss/postcss-media-minmax).

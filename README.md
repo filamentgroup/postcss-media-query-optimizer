@@ -16,6 +16,12 @@ A postcss plugin that will optimize your media queries.
 
 ## Usage
 
+Install from npm: [`postcss-media-query-optimizer`](https://www.npmjs.com/package/postcss-media-query-optimizer)
+
+```
+npm install postcss-media-query-optimizer --save-dev
+```
+
 ### Gulp
 
 _TODO_
@@ -51,3 +57,4 @@ npx ava
 ## Credits
 
 * This plugin borrows heavily from [`postcss-media-minmax`](https://github.com/postcss/postcss-media-minmax).
+* Uhh, a thing I found after I made this that performs a similar task: [`postcss-mq-optimize`](https://www.npmjs.com/package/postcss-mq-optimize)

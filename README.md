@@ -13,6 +13,7 @@ A postcss plugin that will optimize your media queries.
 ## Limitations
 
 * Only supports `em` and `px` units in media queries (for now).
+* Future TODO: Does not yet optimize across comma separated (OR) expressions. Would be better if `(min-width: 20em), (min-width: 30em)` would simplify to `(min-width: 20em)`.
 
 ## Usage
 

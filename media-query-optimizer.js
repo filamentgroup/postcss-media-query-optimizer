@@ -23,12 +23,14 @@ function getValue(pxValue, units) {
 module.exports = postcss.plugin("postcss-media-query-optimizer", function () {
   return function(css) {
     css.walkAtRules("media", function(rule) {
-      let minPx = undefined;
-      let maxPx = undefined;
-      let usingEms = false;
-      let needsCorrection = false;
+      let finalSelector = [];
 
       rule.params.split(",").forEach(function(expression) {
+        let usingEms = false;
+        let minPx = undefined;
+        let maxPx = undefined;
+        let needsCorrection = false;
+
         expression = expression.trim();
 
         [...matchAll( expression, regex.minWidth )].forEach(function(minMatch, i) {
@@ -66,34 +68,47 @@ module.exports = postcss.plugin("postcss-media-query-optimizer", function () {
             needsCorrection = true;
           }
         });
+
+        if( maxPx !== undefined && maxPx === 0 ) {
+          return;
+        }
+
+        if(minPx !== undefined && maxPx !== undefined && minPx > maxPx) {
+          return;
+        }
+
+        // console.log( expression, needsCorrection, minPx, maxPx );
+        if(minPx !== undefined && minPx === 0) {
+          if( maxPx === undefined ) {
+            finalSelector.push("all");
+            return;
+          } else {
+            finalSelector.push(`(max-width: ${getValue(maxPx, usingEms ? "em" : "px")})`);
+            return;
+          }
+        } else if(needsCorrection) {
+          let results = [];
+          if(minPx !== undefined) {
+            results.push(`(min-width: ${getValue(minPx, usingEms ? "em" : "px")})`);
+          }
+          if(maxPx !== undefined) {
+            results.push(`(max-width: ${getValue(maxPx, usingEms ? "em" : "px")})`);
+          }
+
+          if( results.length ) {
+            finalSelector.push(results.join(" and "));
+            return;
+          }
+        }
+
+        // passthrough
+        finalSelector.push(expression);
       });
 
-      if( maxPx !== undefined && maxPx === 0 ) {
+      if( finalSelector.length === 0 ) {
         rule.remove();
-      }
-
-      if(minPx !== undefined && maxPx !== undefined && minPx > maxPx) {
-        rule.remove();
-      }
-
-      // console.log( rule.params, needsCorrection, minPx, maxPx );
-      if(minPx !== undefined && minPx === 0) {
-        if( maxPx === undefined ) {
-          rule.params = "all";
-        } else {
-          rule.params = `(max-width: ${getValue(maxPx, usingEms ? "em" : "px")})`;
-        }
-      } else if(needsCorrection) {
-        let results = [];
-        if(minPx !== undefined) {
-          results.push(`(min-width: ${getValue(minPx, usingEms ? "em" : "px")})`);
-        }
-        if(maxPx !== undefined) {
-          results.push(`(max-width: ${getValue(maxPx, usingEms ? "em" : "px")})`);
-        }
-        if( results.length ) {
-          rule.params = results.join(" and ");
-        }
+      } else {
+        rule.params = finalSelector.join(", ");
       }
     });
 

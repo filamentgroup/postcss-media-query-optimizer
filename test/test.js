@@ -37,6 +37,12 @@ test("Px values", t => {
 	t.is(getCSS("@media (max-width: 20px) { color: blue }"), "@media (max-width: 20px) { color: blue }");
 });
 
+test("Comma separated", t => {
+	// TODO these should optimize across commas, this should become (min-width: 30em)
+	t.is(getCSS("@media (min-width: 30em), (min-width: 48em) { color: blue }"), "@media (min-width: 30em), (min-width: 48em) { color: blue }");
+	t.is(getCSS("@media (max-width: 47.9375em) and (min-width: 30em), (min-width: 48em) { color: blue }"), "@media (max-width: 47.9375em) and (min-width: 30em), (min-width: 48em) { color: blue }");
+});
+
 test("From the wild", t => {
 	t.is(getCSS(`@media (min-width: 59.375em) and (min-width: 37.5em) {
 		.layout-full .layout_body {

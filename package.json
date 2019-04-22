@@ -1,0 +1,19 @@
+{
+  "name": "postcss-media-query-optimizer",
+  "version": "1.0.0",
+  "description": "A postcss plugin to optimize your media queries.",
+  "main": "media-query-optimizer.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^7.0.14",
+    "string.prototype.matchall": "^3.0.1"
+  },
+  "devDependencies": {
+    "ava": "^1.4.1"
+  }
+}

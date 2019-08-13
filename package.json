@@ -9,6 +9,14 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filamentgroup/postcss-media-query-optimizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/filamentgroup/postcss-media-query-optimizer/issues"
+  },
+  "homepage": "https://github.com/filamentgroup/postcss-media-query-optimizer#readme",
   "dependencies": {
     "postcss": "^7.0.14",
     "string.prototype.matchall": "^3.0.1"

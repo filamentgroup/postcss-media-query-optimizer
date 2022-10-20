@@ -1,3 +1,5 @@
+:warning: This project is archived and the repository is no longer maintained. 
+
 # postcss-media-query-optimizer
 
 A postcss plugin that will optimize your media queries.
